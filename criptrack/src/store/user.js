@@ -13,7 +13,20 @@ const defaultUser = {
 const storedUser = JSON.parse(localStorage.getItem('user')) || {}
 const initialState = { ...defaultUser, ...storedUser }
 
-export const user = reactive(initialState)
+export const user = reactive({
+  ...initialState,
+
+  logout() {
+    if (confirm('¿Seguro que deseas cerrar sesión?')) {
+      localStorage.removeItem('user');
+      this.isAuthenticated = false;
+      this.id = null;
+      this.nombre = '';
+      this.apellido = '';
+      this.email = '';
+    }
+  }
+});
 
 // Cada vez que cambia el usuario, lo guardamos
 watch(

@@ -7,7 +7,6 @@
         <router-link v-if="isAuthenticated" to="/historial">Historial</router-link>
         <router-link v-if="isAuthenticated" to="/status">Estado actual</router-link>
         <router-link v-if="isAuthenticated" to="/investment-analysis">Análisis de Inversiones</router-link>
-
       </div>
   
       <div class="nav-right">
@@ -18,35 +17,30 @@
     </nav>
   </header>
 </template>
-  
+
 <script>
-  import { computed } from 'vue'
-  import { user } from '../store/user'
-  import { useRouter } from 'vue-router'
-  
-  export default {
-    setup() {
-      const router = useRouter()
-      const isAuthenticated = computed(() => user.isAuthenticated)
-  
-      const logout = () => {
-        localStorage.removeItem('user')
-        user.isAuthenticated = false
-        user.id = null
-        user.nombre = ''
-        user.apellido = ''
-        user.email = ''
-        router.push('/login')
-      }
-  
-      return {
-        isAuthenticated,
-        logout,
-      }
-    },
-  }
+import { computed } from 'vue'
+import { user } from '../store/user'
+import { useRouter } from 'vue-router'
+
+export default {
+  setup() {
+    const router = useRouter()
+    const isAuthenticated = computed(() => user.isAuthenticated)
+
+    const logout = () => {
+      user.logout();
+      router.push('/login');
+    }
+
+    return {
+      isAuthenticated,
+      logout,
+    }
+  },
+}
 </script>
-  
+
 <style scoped>
 .header {
   background-color: #121212;
@@ -68,21 +62,21 @@
 }
 
 router-link {
-  color: #1abc9c; /* Color turquesa */
+  color: #1abc9c;
   font-weight: 500;
-  text-decoration: none; /* Elimina el subrayado */
-  opacity: 0.7; /* Menos saturado cuando no está activo */
+  text-decoration: none;
+  opacity: 0.7;
   transition: color 0.3s, opacity 0.3s;
 }
 
 router-link:hover {
-  opacity: 1; /* Cuando pasas el mouse, se vuelve opaco */
+  opacity: 1;
 }
 
 .router-link-active {
   color: #1abc9c;
   font-weight: bold;
-  opacity: 1; /* Al estar activo, el enlace se ve brillante */
+  opacity: 1;
 }
 
 button {

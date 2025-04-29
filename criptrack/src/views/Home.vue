@@ -22,10 +22,7 @@ export default {
     const username = computed(() => `${user.nombre} ${user.apellido}`);
 
     const logout = () => {
-      user.isAuthenticated = false;
-      user.username = '';
-      localStorage.removeItem('isAuthenticated');
-      localStorage.removeItem('username');
+      user.logout();
       router.push('/login');
     };
 
